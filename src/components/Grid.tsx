@@ -172,7 +172,7 @@ const Grid = () => {
       ...prevState,
       rowN: prevState.tempRowN,
       colN: prevState.tempColN,
-      timeInterval: prevState.tempTimeInterval,
+      timeInterval: prevState.tempTimeInterval * 1000,
     }));
     const newGrid = emptyGrid();
     setGrid(newGrid);
@@ -305,12 +305,12 @@ const Grid = () => {
                       <span>Time interval (1-10): </span>
                       <input
                         className="input"
-                        value={state.tempTimeInterval}
+                        value={state.tempTimeInterval / 1000}
                         onChange={handleTimeIntervalChange}
                         placeholder="Time Interval"
-                        step="1"
-                        min="1"
-                        max="10"
+                        // step="1"
+                        // min="1"
+                        // max="10"
                       />
               
                       <span>Enter Row Count (1-100): </span>
@@ -319,9 +319,9 @@ const Grid = () => {
                         value={state.tempRowN}
                         onChange={handleRowChange}
                         placeholder="Enter Row count"
-                        step="10"
-                        min="0"
-                        max="100"
+                        // step="10"
+                        // min="0"
+                        // max="100"
                       />
               
                       <span>Enter Column Count (1-100): </span>
@@ -330,9 +330,9 @@ const Grid = () => {
                         value={state.tempColN}
                         onChange={handleColChange}
                         placeholder="Enter Column count"
-                        step="10"
-                        min="0"
-                        max="100"
+                        // step="10"
+                        // min="0"
+                        // max="100"
                       />
                       </div>
 

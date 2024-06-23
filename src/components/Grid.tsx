@@ -172,7 +172,7 @@ const Grid = () => {
       ...prevState,
       rowN: prevState.tempRowN,
       colN: prevState.tempColN,
-      timeInterval: prevState.tempTimeInterval * 1000,
+      timeInterval: prevState.tempTimeInterval,
     }));
     const newGrid = emptyGrid();
     setGrid(newGrid);
@@ -216,26 +216,39 @@ const Grid = () => {
 
   // error messages
   const validateInput = (value : number, min : number, max : number) => {
-    if (!Number.isFinite(value)) return 'Value must be a number';
-    if (value < min || value > max) return `Value must be between ${min} and ${max}`;
+    if (!Number.isFinite(value)){
+      setState(prevState=> ({
+        ...prevState,
+        submitSuccessfully: false
+      }));   
+      return 'Value must be a number';
+    }
+    if (value < min || value > max) {
+      setState(prevState=> ({
+        ...prevState,
+        submitSuccessfully: false
+      }));   
+      return `Value must be between ${min} and ${max}`;
+    }
     return '';
   };
 
   // handle the row change
   const handleRowChange = (e : any) => {
-    const value = Number(e.target.value);
-    const error = validateInput(value, 0, maxGridRow);
+    let value = Number(e.target.value);
+    const error = validateInput(value, 1, maxGridRow);
     setState(prevState=> ({
       ...prevState,
       tempRowNError: error
-    }));    
+    }));   
+
     if (!error) setState(prevState => ({ ...prevState, tempRowN: value }));
   };
 
   // handle the column change
   const handleColChange = (e : any) => {
     const value = Number(e.target.value);
-    const error = validateInput(value, 0, maxGridCol);
+    const error = validateInput(value, 1, maxGridCol);
     setState(prevState=> ({
       ...prevState,
       tempColNError: error
@@ -246,7 +259,7 @@ const Grid = () => {
   // handle the time interval change
   const handleTimeIntervalChange = (e : any) => {
     const value = Number(e.target.value);
-    const error = validateInput(value, 0, maxIntervalTime);
+    const error = validateInput(value, 1, maxIntervalTime);
     setState(prevState=> ({
       ...prevState,
       tempTimeIntervalError: error
@@ -308,9 +321,9 @@ const Grid = () => {
                         value={state.tempTimeInterval / 1000}
                         onChange={handleTimeIntervalChange}
                         placeholder="Time Interval"
-                        // step="1"
-                        // min="1"
-                        // max="10"
+                        step="1"
+                        min="1"
+                        max="10"
                       />
               
                       <span>Enter Row Count (1-100): </span>
@@ -319,9 +332,9 @@ const Grid = () => {
                         value={state.tempRowN}
                         onChange={handleRowChange}
                         placeholder="Enter Row count"
-                        // step="10"
-                        // min="0"
-                        // max="100"
+                        step="10"
+                        min="1"
+                        max="100"
                       />
               
                       <span>Enter Column Count (1-100): </span>
@@ -330,9 +343,9 @@ const Grid = () => {
                         value={state.tempColN}
                         onChange={handleColChange}
                         placeholder="Enter Column count"
-                        // step="10"
-                        // min="0"
-                        // max="100"
+                        step="10"
+                        min="1"
+                        max="100"
                       />
                       </div>
 

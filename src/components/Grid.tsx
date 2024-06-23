@@ -17,7 +17,7 @@ const Grid = () => {
     tempRowN: 20,
     tempColN: 20,
     timeInterval: 1000,
-    tempTimeInterval: 1,
+    tempTimeInterval: 1000,
     blueGrid: 'blue',
     greenGrid: 'white',
     tempRowNError: '',
@@ -309,7 +309,7 @@ const Grid = () => {
                         onChange={handleTimeIntervalChange}
                         placeholder="Time Interval"
                         step="1"
-                        min="0"
+                        min="1"
                         max="10"
                       />
               

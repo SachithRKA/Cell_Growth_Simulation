@@ -3,7 +3,6 @@ name: Deploy TypeScript Project to Pages
 on:
   push:
     branches: ["main"]
-
   workflow_dispatch:
 
 permissions:
@@ -31,7 +30,12 @@ jobs:
         run: npm install
 
       - name: Compile TypeScript
-        run: npx tsc 
+        run: npx tsc
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./out
 
   deploy:
     environment:
@@ -42,4 +46,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v1

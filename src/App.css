@@ -1,16 +1,21 @@
 .App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+  background-color: rgb(177, 227, 236);
+  height: 100vh;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+
+.main-section {
+  background-color: black;
 }
 
 .App-header {
@@ -28,6 +33,21 @@
   color: #61dafb;
 }
 
+.grid-wrapper {
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgb(116, 116, 116);
+  border-radius: 2px;
+}
+
+.cell {
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,4 +55,196 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.form, .firstFunctions, .secondFunctions {
+  margin-bottom: 20px;
+}
+
+.form input {
+  margin: 5px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.open {
+  width: 120px;
+  top: 0;
+  background-color: #007bff;
+  border-radius: 5px;
+  line-height: 40px;
+  cursor: pointer;
+  margin-left: 10px;
+  color: white;
+}
+
+.open:hover {
+  background-color: #0056b3;
+}
+
+.settings, .controls {
+  width: 525px;
+  height: 400px;
+  margin: auto;
+  border-radius: 8px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+.model_header, .model_footer {
+  width: 400px;
+  float: left;
+  height: 42px;
+  border-bottom: 1px solid #eee;
+}
+
+.close {
+  color: white;
+  background-color: red;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  float: right;
+  margin-bottom: 20px;
+}
+
+.close:hover {
+  background-color: darkred;
+}
+
+.input, .form {
+  margin: 10px 0;
+}
+
+.error { 
+  color: red;
+  margin-top: 5px;
+}
+
+.keyboard-rules span {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.keyboard-rules ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.keyboard-rules li {
+  font-size: 20px;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.keyboard-rules strong {
+  color: #007bff;
+}
+
+.model_body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 500px;
+  margin-left: 15px;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.model_body span {
+  margin-left: 10px;
+}
+
+.main-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  margin-top: 20px;
+}
+
+.first-functions {
+  display: flex;
+  gap: 10px;
+}
+
+.second-functions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.color-button {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  color:transparent;
+  border: 1px solid #818181;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.green {
+  background-color: green;
+}
+
+.second-functions span {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.button.start {
+  background-color: green;
+  color: white;
 }

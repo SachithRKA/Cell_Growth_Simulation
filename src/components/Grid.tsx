@@ -419,8 +419,6 @@ const Grid = () => {
                   height={gridSize / state.rowN}
                   fill={grid[i][j] ? (state.blueGrid === "white" && history[state.counter][i][j] ? state.greenGrid : state.blueGrid) : (history[state.counter][i][j] ? state.greenGrid : 'white')}
                   onClick={() => {
-                    performance.mark('onClickStart'); // Start measuring
-
                     const newGrid = grid.slice();
                     newGrid[i][j] = grid[i][j] ? 0 : 1;
                     setGrid(newGrid);
@@ -434,17 +432,6 @@ const Grid = () => {
                       ...prevState,
                       counter: state.counter + 1
                     }));   
-                    // Assuming simulateSpreading is a synchronous function that updates the grid based on some logic
-
-                      performance.mark('onClickEnd'); // End measuring
-                      performance.measure('onClick', 'onClickStart', 'onClickEnd'); // Calculate the duration
-
-                      // Optionally, log the result to the console
-                      const measure = performance.getEntriesByName('onClick')[0];
-                      console.log(`onClick duration: ${measure.duration}ms`);
-                      performance.clearMarks(); // Clear marks to avoid clutter
-                      performance.clearMeasures(); // Clear measures to avoid clutter
-
                   }}
                 />
               ))

@@ -317,7 +317,7 @@ const Grid = () => {
                     handleSubmit(true)
                   }}>
                     <div className="model_body">
-                      <span>Time interval (1-10): </span>
+                      <span>Time interval (1-10) seconds: </span>
                       <input
                         className="input"
                         title="Input field that takes the time interval of the grid. It must be between 1 and 10."

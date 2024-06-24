@@ -24,6 +24,7 @@ The project **Cell Growth Simulation** simulates the growth patterns of bacteria
 4. **Keyboard Shortcuts**
    - **Spacebar:** Start/Pause the simulation.
    - **R or Enter:** Reset the simulation.
+   - **R or Enter:** Shortcut to Submit button in the settings section.
    - **Arrow Right:** Move to the next grid state.
    - **Arrow Left:** Move to the previous grid state.
 
@@ -184,8 +185,7 @@ The image shows the performance calculations from the Chrome DevTools Performanc
 
 ##### Performance Comparison:
 
-
-![[Screenshot from 2024-06-23 22-31-12 1.png]]
+![Metics Performance](Images/MatrixValues.png)
 
 **Rendering Time Improvement**:
 - 50x50 grid: Reduced from 403 ms to 185 ms (54% improvement).

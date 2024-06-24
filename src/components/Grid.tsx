@@ -397,6 +397,7 @@ const Grid = () => {
                           <ul>
                             <li><strong>Spacebar:</strong> Start/Pause the simulation</li>
                             <li><strong>R or Enter:</strong> Reset the simulation</li>
+                            <li><strong>Enter:</strong> Shortcut to Submit Button in Settings.</li>
                             <li><strong>ArrowRight:</strong> Move to the next grid state</li>
                             <li><strong>ArrowLeft:</strong> Move to the previous grid state</li>
                           </ul>

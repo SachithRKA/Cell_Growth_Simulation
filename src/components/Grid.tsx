@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 
 // the directions to spread the bacteria
 const directions = [
@@ -33,23 +33,23 @@ const Grid = () => {
   const gridSize = 800;
 
   // creates an empty grid
-  const emptyGrid = (rows = state.rowN, cols = state.colN) => {
+  const emptyGrid = useCallback((rows = state.rowN, cols = state.colN) => {
     const grid = [];
     for (let i = 0; i < rows; i++) {
       grid.push(Array.from(Array(cols), () => 0));
     } 
     return grid;
-  };
+  }, [state.rowN, state.colN]);
 
   // initial grid saves the initial grid state, so grid and history can be reset
-  const initialGrid = useMemo(() => emptyGrid(state.rowN, state.colN), [state.rowN, state.colN]);
+  const initialGrid = useMemo(() => emptyGrid(state.rowN, state.colN), [state.rowN, state.colN, emptyGrid]);  
   // the main grid, color blue
   const [grid, setGrid] = useState(initialGrid);
   // the history of the grid and future, used fore prediction, color green
   const [history, setHistory] = useState([initialGrid]);
 
   // takes a grid = number[][] and returns a new grid with the bacteria spread
-  const spread = (currentGrid = grid) => {
+  const spread = useCallback((currentGrid = grid) => {
     const newGrid = currentGrid.map(rows => [...rows]);
     currentGrid.forEach((rows, i) => {
       rows.forEach((cell, j) => {
@@ -65,7 +65,7 @@ const Grid = () => {
       });
     });
     return newGrid;
-  };
+  }, [grid, state.rowN, state.colN]);
 
   // check if the grid is full, returns true if grid is full, false otherwise
   const isGridFull = (currentGrid : number[][]) => {
@@ -73,7 +73,7 @@ const Grid = () => {
   };
 
   // increments the history grid, to predict and return the next grid
-  const nextGrid = () => {
+  const nextGrid = useCallback(() => {
     const currentGrid = history[state.counter];
     const newGrid = spread(currentGrid);
     const newHistory = [...history.slice(0, state.counter + 1), newGrid];
@@ -82,16 +82,17 @@ const Grid = () => {
       ...prevState,
       counter: state.counter + 1
     }));   
-  }
+  },[history, state.counter, spread]);
 
   // increments the history grid, return the previous grid
-  const prevGrid = () => {
+  const prevGrid = useCallback(() => {
     if (state.counter > 0) {
       setState(prevState=> ({
         ...prevState,
         counter: state.counter - 1
-      }));       }
-  };
+      }));       
+    }
+  },[state.counter]);
 
   // start the simulation
   const startSimulation = () => {
@@ -113,7 +114,8 @@ const Grid = () => {
     }, state.timeInterval);
 
     return () => clearInterval(intervalId);
-  }, [start, spread, state.timeInterval]);
+  }, [start, spread, state.timeInterval, isGridFull]);
+
 
   // checks if the user press the spacebar to start the simulation
   useEffect(() => {
@@ -129,7 +131,7 @@ const Grid = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [start]);
+  }, [start, startSimulation]);
 
   // checks if the user press the r or enter key to reset
   useEffect(() => {
@@ -286,7 +288,7 @@ const Grid = () => {
     <div className="container">
       <div className="main-section">
         <div className="nav">
-          <div className="open" onClick={() => 
+          <div className="open" title="The button that open the settings section." onClick={() => 
             {
               setState(prevState=> ({
                 ...prevState,
@@ -297,7 +299,7 @@ const Grid = () => {
           {state.openSett && (
               <div className="settings">
                 <div className="modal_header">
-                  <div  className="close" onClick={() => 
+                  <div  className="close" title="The button that close the settings section." onClick={() => 
                     {
                       setState(prevState=> ({
                         ...prevState,
@@ -318,6 +320,7 @@ const Grid = () => {
                       <span>Time interval (1-10): </span>
                       <input
                         className="input"
+                        title="Input field that takes the time interval of the grid. It must be between 1 and 10."
                         value={state.tempTimeInterval / 1000}
                         onChange={handleTimeIntervalChange}
                         placeholder="Time Interval"
@@ -329,6 +332,7 @@ const Grid = () => {
                       <span>Enter Row Count (1-100): </span>
                       <input
                         className="input"
+                        title="Input field that takes the row count of the grid. It must be between 1 and 100."
                         value={state.tempRowN}
                         onChange={handleRowChange}
                         placeholder="Enter Row count"
@@ -340,6 +344,7 @@ const Grid = () => {
                       <span>Enter Column Count (1-100): </span>
                       <input
                         className="input"
+                        title="Input field that takes the column count of the grid. It must be between 1 and 100."
                         value={state.tempColN}
                         onChange={handleColChange}
                         placeholder="Enter Column count"
@@ -355,12 +360,12 @@ const Grid = () => {
                       {state.submitSuccessfully && <div className="success" style={{color: "green"}}>Submitted Successfully</div>}
 
                       <div className="modal_footer" style={{width:"100%", float: "left", height:"42px", borderTop: "1px solid #eee"}}>
-                      <button type="submit" className="button" onClick={resetSimulation}>Submit</button>
+                      <button title="button that submits the input changes" type="submit" className="button" onClick={resetSimulation}>Submit</button>
                   </div>
                 </form>
               </div>
           )}
-          <div className="open" onClick={() => 
+          <div className="open" title="The button that opens the control section." onClick={() => 
             {
               setState(prevState=> ({
                 ...prevState,
@@ -371,7 +376,7 @@ const Grid = () => {
           {state.openControl && (
               <div className="controls">
                 <div className="modal_header">
-                  <div className="close" onClick={() => 
+                  <div className="close" title="Button that close the control section." onClick={() => 
                     {
                       setState(prevState=> ({
                         ...prevState,
@@ -401,7 +406,7 @@ const Grid = () => {
           )}
         </div>
         
-        <div className="grid-wrapper">
+        <div className="grid-wrapper" title="The grid or the confined space for the bacteria">
           <svg className="grid" style={{ width: `${gridSize}px`, height: `${gridSize}px` }}>
             {grid.map((rows, i) =>
               rows.map((cell, j) => (
@@ -413,6 +418,8 @@ const Grid = () => {
                   height={gridSize / state.rowN}
                   fill={grid[i][j] ? (state.blueGrid === "white" && history[state.counter][i][j] ? state.greenGrid : state.blueGrid) : (history[state.counter][i][j] ? state.greenGrid : 'white')}
                   onClick={() => {
+                    performance.mark('onClickStart'); // Start measuring
+
                     const newGrid = grid.slice();
                     newGrid[i][j] = grid[i][j] ? 0 : 1;
                     setGrid(newGrid);
@@ -426,6 +433,17 @@ const Grid = () => {
                       ...prevState,
                       counter: state.counter + 1
                     }));   
+                    // Assuming simulateSpreading is a synchronous function that updates the grid based on some logic
+
+                      performance.mark('onClickEnd'); // End measuring
+                      performance.measure('onClick', 'onClickStart', 'onClickEnd'); // Calculate the duration
+
+                      // Optionally, log the result to the console
+                      const measure = performance.getEntriesByName('onClick')[0];
+                      console.log(`onClick duration: ${measure.duration}ms`);
+                      performance.clearMarks(); // Clear marks to avoid clutter
+                      performance.clearMeasures(); // Clear measures to avoid clutter
+
                   }}
                 />
               ))
@@ -435,17 +453,17 @@ const Grid = () => {
 
         <div className="main-section">
           <div className="first-functions">
-              <button className={`button ${start ? 'start' : ''}`} onClick={startSimulation}>{start ? 'Pause' : 'Start'}</button>
-              <button className="button" onClick={resetSimulation}>Reset</button>
+              <button title="The button that pause and starts the simulation." className={`button ${start ? 'start' : ''}`} onClick={startSimulation}>{start ? 'Pause' : 'Start'}</button>
+              <button title="The button that resets the whole grid and its spreads." className="button" onClick={resetSimulation}>Reset</button>
             </div>
             
             <div className="second-functions">
-              <span>Backterial Growth Spread Over Time: </span>
-              <button className="color-button blue" style={{ backgroundColor: state.blueGrid }} onClick={changeMainGridColor}>.</button>
-              <span>Backterial Growth Pattern Expected: </span>
-              <button className="color-button green" style={{ backgroundColor: state.greenGrid }} onClick={changeSecondGridColor}>.</button>
-              <button className="button" onClick={prevGrid} disabled={state.counter === 0}>Prev</button>
-              <button className="button" onClick={nextGrid}>Next</button>
+              <span title="Text that shows the current state of growth prediction grid.">Growth Over Time: </span>
+              <button className="color-button blue" title="The enable and disable button that show growth pattern of the bacterial, color blue." style={{ backgroundColor: state.blueGrid }} onClick={changeMainGridColor}>.</button>
+              <span title="Text that shows the current state of growth prediction grid.">Predicted Growth Pattern: </span>
+              <button className="color-button green" title="The the enable and disable button that show predicted growth pattern of the bacterial, color green." style={{ backgroundColor: state.greenGrid }} onClick={changeSecondGridColor}>.</button>
+              <button className="button" title="Go to the previous state of growth prediction grid." onClick={prevGrid} disabled={state.counter === 0}>Prev</button>
+              <button className="button" title="Go to the next state of growth prediction grid." onClick={nextGrid}>Next</button>
             </div>
         </div>
       </div>

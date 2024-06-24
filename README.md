@@ -187,12 +187,12 @@ The image shows the performance calculations from the Chrome DevTools Performanc
 
 ![[Screenshot from 2024-06-23 22-31-12 1.png]]
 
-- **Rendering Time Improvement**:
+**Rendering Time Improvement**:
 - 50x50 grid: Reduced from 403 ms to 185 ms (54% improvement).
 - 60x60 grid: Reduced from 524 ms to 255 ms (51% improvement).
 - 100x100 grid: Reduced from 1621 ms to 507 ms (69% improvement).
 
-- **System Time Improvement**:
+**System Time Improvement**:
 - 50x50 grid: Reduced from 544 ms to 431 ms (21% improvement).
 - 60x60 grid: Reduced from 684 ms to 409 ms (40% improvement).
 - 100x100 grid: Reduced from 827 ms to 528 ms (36% improvement).

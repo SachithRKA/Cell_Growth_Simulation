@@ -18,8 +18,8 @@ The project **Cell Growth Simulation** simulates the growth patterns of bacteria
    - **Settings Section:** Allows users to adjust the time interval, row count, and column count.
 
 3. **Bacterial Growth Visualisation**
-   - The primary bacterial growth, called "Bacterial Growth Spread Over Time," is shown in blue. Users can disable this visualization.
-   - An alternative view, "Bacterial Growth Pattern Expected," is shown in green. Users can navigate through expected future and past grid states spread using the previous and next buttons.
+   - The primary bacterial growth, called "Growth Over Time" is shown in blue. Users can disable this visualization.
+   - An alternative view, "Predicted Growth Pattern" is shown in green. Users can navigate through expected future and past grid states spread using the previous and next buttons.
 
 4. **Keyboard Shortcuts**
    - **Spacebar:** Start/Pause the simulation.
